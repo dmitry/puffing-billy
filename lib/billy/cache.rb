@@ -65,16 +65,7 @@ module Billy
       key = key(method, url, body)
       @cache[key] = cached
 
-      if Billy.config.persist_cache
-        Dir.mkdir(Billy.config.cache_path) unless File.exists?(Billy.config.cache_path)
-
-        begin
-          File.open(cache_file(key), 'w') do |f|
-            f.write(cached.to_yaml(:Encoding => :Utf8))
-          end
-        rescue StandardError => e
-        end
-      end
+      write(key, cached)
     end
 
     def reset
@@ -127,6 +118,20 @@ module Billy
 
     def use_default_scope
       scope_to nil
+    end
+
+    private
+
+    def write(key, cached)
+      if Billy.config.persist_cache
+        Dir.mkdir(Billy.config.cache_path) unless File.exists?(Billy.config.cache_path)
+
+        File.open(cache_file(key), 'w') do |f|
+          f.write(cached.to_yaml(:Encoding => :Utf8))
+        end
+      end
+    rescue StandardError => e
+      puts "Something went wrong while writing the puffing-billy cache file: #{e.message}"
     end
   end
 end
