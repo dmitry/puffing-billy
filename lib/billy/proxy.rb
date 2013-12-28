@@ -4,6 +4,8 @@ require 'eventmachine'
 
 module Billy
   class Proxy
+    LOCALHOST = 'localhost'
+
     attr_reader :cache
 
     def initialize
@@ -25,7 +27,7 @@ module Billy
     end
 
     def host
-      'localhost'
+      LOCALHOST
     end
 
     def port
@@ -56,7 +58,7 @@ module Billy
     end
 
     def restore_cache
-      warn "[DEPRECATION] `restore_cache` is deprecated as cache files are dynamincally checked. Use `reset_cache` if you just want to clear the cache."
+      warn '[DEPRECATION] `restore_cache` is deprecated as cache files are dynamincally checked. Use `reset_cache` if you just want to clear the cache.'
       @cache.reset
     end
 
@@ -73,7 +75,7 @@ module Billy
           puts e.backtrace.join("\n")
         end
 
-        @signature = EM.start_server('127.0.0.1', 0, ProxyConnection) do |p|
+        @signature = EM.start_server(LOCALHOST, 0, ProxyConnection) do |p|
           p.handler = self
           p.cache = @cache
         end

@@ -11,7 +11,7 @@ module Billy
 
     def post_init
       @parser = Http::Parser.new(self)
-      @header_data = ""
+      @header_data = ''
     end
 
     def receive_data(data)
