@@ -43,12 +43,10 @@ module Billy
     end
 
     def fetch_from_persistence(key)
-      begin
-        @cache[key] = YAML.load(File.open(cache_file(key))) if persisted?(key)
-      rescue ArgumentError => e
-        puts "Could not parse YAML: #{e.message}"
-        nil
-      end
+      @cache[key] = YAML.load(File.open(cache_file(key))) if persisted?(key)
+    rescue ArgumentError => e
+      puts "Could not parse YAML: #{e.message}"
+      nil
     end
 
     def store(method, url, body, status, headers, content)
@@ -132,6 +130,7 @@ module Billy
       end
     rescue StandardError => e
       puts "Something went wrong while writing the puffing-billy cache file: #{e.message}"
+      nil
     end
   end
 end
