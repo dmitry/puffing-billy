@@ -14,6 +14,7 @@ module Billy
     #   data structure while preserving the order of arrays.
     def self.sort_hash_keys(data)
       return data unless data.is_a?(Hash) || data.is_a?(Array)
+
       if data.is_a? Hash
         data.keys.sort.reduce({}) do |seed, key|
           seed[key] = sort_hash_keys(data[key])

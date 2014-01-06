@@ -11,7 +11,7 @@ module Billy
 
     def post_init
       @parser = Http::Parser.new(self)
-      @header_data = ""
+      @header_data = ''
     end
 
     def receive_data(data)
@@ -115,6 +115,7 @@ module Billy
         res_headers = res_headers.merge('Connection' => 'close')
         res_headers.delete('Transfer-Encoding')
         res_content = req.response.force_encoding('BINARY')
+
         if cache.cacheable?(@url, res_headers)
           cache.store(@parser.http_method.downcase, @url, @body, res_status, res_headers, res_content)
         end

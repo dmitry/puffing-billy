@@ -3,7 +3,7 @@ require 'tmpdir'
 
 module Billy
   class Config
-    DEFAULT_WHITELIST = ['127.0.0.1', 'localhost']
+    DEFAULT_WHITELIST = %w(127.0.0.1 localhost)
 
     attr_accessor :logger, :cache, :whitelist, :path_blacklist, :ignore_params, :persist_cache, :ignore_cache_port, :cache_path
 

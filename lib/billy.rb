@@ -6,6 +6,8 @@ require "billy/proxy"
 require "billy/proxy_connection"
 
 module Billy
+  DRIVERS = %w(capybara/poltergeist capybara/webkit selenium/webdriver)
+
   def self.proxy
     @billy_proxy ||= (
       proxy = Billy::Proxy.new
@@ -15,7 +17,7 @@ module Billy
   end
 
   def self.register_drivers
-    ['capybara/poltergeist', 'capybara/webkit', 'selenium/webdriver'].each do |d|
+    DRIVERS.each do |d|
       begin
         require d
       rescue LoadError
